@@ -1,4 +1,4 @@
-''''from utils.dict import user_data_to_dict, unicode_to_str,fill_all_field_in_arg
+'''from utils.dict import user_data_to_dict, unicode_to_str,fill_all_field_in_arg
 
 class Discount:
     def __init__(self, db_conn,id, name=None, amount=None, discount=None, discount_type=None,quantity=None):
@@ -13,7 +13,6 @@ class Discount:
      
 
     def create_discount(self):
-        #con = pymysql.connect(hostname, username, password, database)
         cur = self.db_conn.cursor()
         cur.execute('INSERT into self.table_name ((discount_id,name,amount,discount,discount_type, quantity) values(self.discount_id,self.name,self.amount,self.discount,self.type, self.quantity))')
         cur.close()
@@ -22,28 +21,23 @@ class Discount:
     def get_discount(self, id = None):
         if id==None:
             dis_info =[]
-            #con = pymysql.connect(hostname, username, password, database)
             cur = self.db_conn.cursor()
             cur.execute('SELECT * from self.table_name')
             data = cur.fetchall()
             for user in data:
                     usr = user_data_to_dict(user)
                     dis_info.append(usr)
-            #print(dis_info)
         else:
-            #con = pymysql.connect(hostname, username, password, database)
             cur = self.db_conn.cursor()
             cur.execute('SELECT * from self.table_name where id=%s')
             data = cur.fetchall()
             if len(data) >0:
                 usr = user_data_to_dict(data[0])
-                #print(usr)
             else:
                 print("Invalid discount")
         cur.close()
 
     def update_category(self):
-        #con = pymysql.connect(hostname, username, password, database)
         cur = self.db_conn.cursor()
         cur.execute('UPDATE self.table_name SET discount_id=self.id,name=self.name, amount=self.amount, discount=self.discount,discount_type=self.type,quantity=self.quantity where id=%s')
         data = cur.fetchall()
@@ -55,7 +49,6 @@ class Discount:
         self.db_conn.commit()
 
     def delete_category(self):
-        #con = pymysql.connect(hostname, username, password, database)
         cur = self.db_conn.cursor()
         cur.execute('DELETE self.table_name where id=%s')
         cur.close()

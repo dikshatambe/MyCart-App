@@ -10,7 +10,6 @@ class Cart_info:
  
     
     def create_cart(self):
-        #con = pymysql.connect(hostname, username, password, database)
         cur = self.db_conn.cursor()
         cur.execute('INSERT into self.table_name ((cart_id, user_id, product_id) values(self.id, seld.user_id, self.product_id))')
         cur.close()
@@ -19,29 +18,24 @@ class Cart_info:
     def get_cart_info(self, id = None):
         if id==None:
             cart_info =[]
-            #con = pymysql.connect(hostname, username, password, database)
             cur = self.db_conn.cursor()
             cur.execute('SELECT * from self.table_name')
             data = cur.fetchall()
             for user in data:
                     usr = user_data_to_dict(user)
                     cart_info.append(usr)
-            #print(cart_info)
         else:
-            #con = pymysql.connect(hostname, username, password, database)
             cur = self.db_conn.cursor()
             cur.execute('SELECT * from self.table_name where id=%s')
             data = cur.fetchall()
             if len(data) >0:
                 usr = user_data_to_dict(data[0])
-                #print(usr)
             else:
                 print("Invalid Cart Details")
         cur.close()
          
 
     def update_cart_info(self):
-        #con = pymysql.connect(hostname, username, password, database)
         cur = self.db_conn.cursor()
         cur.execute('UPDATE order_id = self.id, user_id=self.user_id, product_id=self.product_id where id=%s')
         data = cur.fetchall()
@@ -54,7 +48,6 @@ class Cart_info:
        
 
     def delete_cart_info(self):
-        #con = pymysql.connect(hostname, username, password, database)
         cur = self.db_conn.cursor()
         cur.execute('DELETE self.table_name where id=%s')
         cur.close()

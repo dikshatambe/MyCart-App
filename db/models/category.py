@@ -10,7 +10,6 @@ class Category:
      
 
     def create_category(self):
-        #con = pymysql.connect(hostname, username, password, database)
         cur = self.db_conn.cursor()
         cur.execute('INSERT into self.table_name ((category_id,cname,info) values(self.id, self.cname,self.info))')
         cur.close()
@@ -20,29 +19,23 @@ class Category:
     def get_category(self, id = None):
         if id==None:
             cat_info =[]
-            #con = pymysql.connect(hostname, username, password, database)
             cur = self.db_conn.cursor()
             cur.execute('SELECT * from self.table_name')
             data = cur.fetchall()
             for user in data:
                     usr = user_data_to_dict(user)
                     cat_info.append(usr)
-           # print(cat_info)
         else:
-            #con = pymysql.connect(hostname, username, password, database)
             cur = self.db_conn.cursor()
             cur.execute('SELECT * from self.table_name where id=%s')
             data = cur.fetchall()
             if len(data) >0:
-                usr = user_data_to_dict(data[0])
-                #print(usr)
             else:
                 print("Invalid category")
         cur.close()
          
 
     def update_category(self):
-        #con = pymysql.connect(hostname, username, password, database)
         cur = self.db_conn.cursor()
         cur.execute('UPDATE self.table_name SET category_id=self.category_id,cname=self.cname, info=self.info where id=%s')
         data = cur.fetchall()
@@ -54,7 +47,6 @@ class Category:
         self.db_conn.commit()
 
     def delete_category(self):
-        #con = pymysql.connect(hostname, username, password, database)
         cur = self.db_conn.cursor()
         cur.execute('DELETE self.table_name where id=%s')
         cur.close()
