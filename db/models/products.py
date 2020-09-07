@@ -14,41 +14,39 @@ class Products:
 
 
     def create_product(self):
-        con = pymysql.connect(hostname, username, password, database)
-        cur = con.cursor()
+        #con = pymysql.connect(hostname, username, password, database)
+        cur = self.db_conn.cursor()
         cur.execute('INSERT into users ((product_id,product_name, category_id, info, color, product_size, price) values(self.id,self.product_name,self.category_id,self.color, self.product_size, self.price))')
         cur.close()
-        con.commit()
+        self.db_conn.commit()
 
     def get_product(self, id = None):
         if id==None:
             product_info =[]
-            con = pymysql.connect(hostname, username, password, database)
-            cur = con.cursor()
+            #con = pymysql.connect(hostname, username, password, database)
+            cur = self.db_conn.cursor()
             cur.execute('SELECT * from self.table_name')
             data = cur.fetchall()
             for product in data:
                     usr = user_data_to_dict(product)
                     product_info.append(usr)
-            print(product_info)
+            #print(product_info)
         else:
-            con = pymysql.connect(hostname, username, password, database)
-            cur = con.cursor()
+            #con = pymysql.connect(hostname, username, password, database)
+            cur = self.db_conn.cursor()
             cur.execute('SELECT * from self.table_name where id=%s')
             data = cur.fetchall()
             if len(data) >0:
                 usr = user_data_to_dict(data[0])
-                print(usr)
+                #print(usr)
             else:
                 print("Invalid product")
         cur.close()
-        con.commit()
-        con.close()
          
 
     def update_product(self):
-        con = pymysql.connect(hostname, username, password, database)
-        cur = con.cursor()
+        #con = pymysql.connect(hostname, username, password, database)
+        cur = self.db_conn.cursor()
         cur.execute('UPDATE self.table_name SET product_id=self.id,product_name=self.product_name,category_id=self.category_id, info=self.info, color=self.color,product_size=self.product_size where id=%s')
         data = cur.fetchall()
         if len(data) >0:
@@ -56,16 +54,15 @@ class Products:
         else:
             print("Invalid product")
         cur.close()
-        con.commit()
-        con.close()
+        self.db_conn.commit()
 
     def delete_product(self):
-        con = pymysql.connect(hostname, username, password, database)
-        cur = con.cursor()
+        #con = pymysql.connect(hostname, username, password, database)
+        cur = self.db_conn.cursor()
         cur.execute('DELETE self.table_name where id=%s')
         cur.close()
-        con.commit()  
-        con.close()      
+        self.db_conn.commit()  
+              
 
         
 

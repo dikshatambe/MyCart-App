@@ -12,42 +12,39 @@ class User_cart:
     
 
     def create_cart(self):
-        con = pymysql.connect(hostname, username, password, database)
-        cur = con.cursor()
+        #con = pymysql.connect(hostname, username, password, database)
+        cur = self.db_conn.cursor()
         cur.execute('INSERT into self.table_name ((cart_id, user_id, product_id, saved_for_later, quantity) values(self.id, seld.user_id, self.product_id, self.saved_for_later, self.quantity))')
         cur.close()
-        con.commit()
-        con.close()
+        self.db_conn.commit()
 
     def get_cart(self, id = None):
         if id==None:
             cart_info =[]
-            con = pymysql.connect(hostname, username, password, database)
-            cur = con.cursor()
+            #con = pymysql.connect(hostname, username, password, database)
+            cur = self.db_conn.cursor()
             cur.execute('SELECT * from self.table_name')
             data = cur.fetchall()
             for user in data:
                     usr = user_data_to_dict(user)
                     cart_info.append(usr)
-            print(cart_info)
+            #print(cart_info)
         else:
-            con = pymysql.connect(hostname, username, password, database)
-            cur = con.cursor()
+            #con = pymysql.connect(hostname, username, password, database)
+            cur = self.db_conn.cursor()
             cur.execute('SELECT * from self.table_name where id=%s')
             data = cur.fetchall()
             if len(data) >0:
                 usr = user_data_to_dict(data[0])
-                print(usr)
+                #print(usr)
             else:
                 print("Invalid Cart Details")
         cur.close()
-        con.commit()
-        con.close()
          
 
     def update_cart(self):
-        con = pymysql.connect(hostname, username, password, database)
-        cur = con.cursor()
+        #con = pymysql.connect(hostname, username, password, database)
+        cur = self.db_conn.cursor()
         cur.execute('UPDATE order_id = self.id, user_id=self.user_id, product_id=self.product_id, saved_for_later=self.saved_for_later, quantity=self.quantity where id=%s')
         data = cur.fetchall()
         if len(data) >0:
@@ -55,13 +52,12 @@ class User_cart:
         else:
             print("Invalid Cart")
         cur.close()
-        con.commit()
-        con.close()
+        self.db_conn.commit()
 
     def delete_cart(self):
-        con = pymysql.connect(hostname, username, password, database)
-        cur = con.cursor()
+        #con = pymysql.connect(hostname, username, password, database)
+        cur = self.db_conn.cursor()
         cur.execute('DELETE self.table_name where id=%s')
         cur.close()
-        con.commit()  
-        con.close()      '''
+        self.db_conn.commit()  
+    '''
