@@ -44,7 +44,7 @@ class User:
 
     def update_user(self, user_id=None):
         cur = self.db_conn.cursor()
-        cur.execute('UPDATE self.table_name SET user_id=self.id, first_name=self.first_name,last_name=self.last_name, email=self.email, contact_number=self.contact_number, address=self.address, postal_code=self.postal_code, password=self.password, user_type=self.user_type, creation_date=self.creation_date where id=self.id;')
+        cur.execute('UPDATE self.table_name SET user_id=self.id, first_name=self.first_name,last_name=self.last_name, email=self.email, contact_number=self.contact_number, address=self.address, postal_code=self.postal_code, password=self.password, user_type=self.user_type, creation_date=self.creation_date where user_id=self.id;')
         data = cur.fetchall()
         if len(data) >0:
             usr = user_data_to_dict(data[0])

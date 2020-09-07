@@ -42,7 +42,7 @@ CREATE TABLE products (
 
 
 CREATE TABLE userCart (
-	cart_id INT PRIMARY KEY,
+	user_cart_id INT PRIMARY KEY,
 	user_id INT,
 	product_id INT,
 	saved_for_later BOOLEAN,
