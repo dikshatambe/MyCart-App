@@ -18,7 +18,7 @@ class User:
 
     def create_user(self):
         cur = self.db_conn.cursor()
-        cur.execute('INSERT INTO self.table_name (user_id, first_name,last_name,email,contact_number, address, postal_code, password, user_type, creation_date) VALUES (self.id, self.first_name,self.last_name,self.email,self.contact_number, self.address, self.postal_code, self.password, self.user_type, self.creation_date);')
+        cur.execute("""INSERT INTO {} (user_id, first_name,last_name,email,contact_number, address, postal_code, password, user_type, creation_date) VALUES ({},{},{},{},{},{},{},{},{},{}""".format(self.table_name, self.id, self.first_name,self.last_name,self.email,self.contact_number, self.address, self.postal_code, self.password, self.user_type, self.creation_date))
         cur.close()
         self.db_conn.commit()
 
@@ -26,14 +26,14 @@ class User:
         if id==None:
             #user_info =[]
             cur = self.db_conn.cursor()
-            cur.execute('SELECT * from self.table_name;')
+            cur.execute("""SELECT * from {}""".format(self.table_name))
             data = cur.fetchall()
             for user in data:
                     usr = user_data_to_dict(data[0])
                     #user_info.append(usr)
         else:
             cur = self.db_conn.cursor()
-            cur.execute('SELECT * from self.table_name where user_id= self.id;')
+            cur.execute("""SELECT * from {} where user_id= {}""".format(self.table_name, self.id))
             data = cur.fetchall()
             if len(data) >0:
                 usr = user_data_to_dict(data[0])
@@ -44,7 +44,7 @@ class User:
 
     def update_user(self, user_id=None):
         cur = self.db_conn.cursor()
-        cur.execute('UPDATE self.table_name SET user_id=self.id, first_name=self.first_name,last_name=self.last_name, email=self.email, contact_number=self.contact_number, address=self.address, postal_code=self.postal_code, password=self.password, user_type=self.user_type, creation_date=self.creation_date where user_id=self.id;')
+        cur.execute("""UPDATE {} SET user_id={}, first_name={},last_name={}, email={}, contact_number={}, address={}, postal_code={}, password={}, user_type={}, creation_date={} where user_id={}""".format(self.table_name, self.id, self.first_name, self.last_name, self.email, self.contact_number, self.address, self.postal_code, self.password, self.user_type, self.creation_date, self.id))
         data = cur.fetchall()
         if len(data) >0:
             usr = user_data_to_dict(data[0])
@@ -55,7 +55,7 @@ class User:
 
     def delete_user(self, user_id=None):
         cur = self.db_conn.cursor()
-        cur.execute('DELETE self.table_name where user_id=self.id;')
+        cur.execute("""DELETE {} where user_id={}""".format(self.table_name, self.id))
         cur.close()
         self.db_conn.commit()        
 
