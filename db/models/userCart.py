@@ -10,7 +10,6 @@ class User_cart:
         self.quantity = quantity
         self.creation_date = creation_date
 
-    
 
     def create_cart(self):
         cur = self.db_conn.cursor()
@@ -27,7 +26,7 @@ class User_cart:
                     usr = user_data_to_dict(data[0])
         else:
             cur = self.db_conn.cursor()
-            cur.execute('SELECT * from {} where user_cart_id={}""".format(self.table_name, id))
+            cur.execute("""SELECT * from {} where user_cart_id={}""".format(self.table_name, id))
             data = cur.fetchall()
             if len(data) >0:
                 usr = user_data_to_dict(data[0])
