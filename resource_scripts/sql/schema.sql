@@ -11,7 +11,7 @@ DROP TABLE  IF EXISTS discount;
 DROP TABLE  IF EXISTS cartInfo;
 
 CREATE TABLE users (
-	user_id 	BINARY(16) PRIMARY KEY,
+	user_id 	INT AUTO_INCREMENT PRIMARY KEY,
 	first_name	CHAR(25) 	NOT NULL,
 	last_name	CHAR(25) 	NOT NULL,     
 	email   	CHAR(50)	NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE discount (
 
 CREATE TABLE orders (
 	order_id INT AUTO_INCREMENT PRIMARY KEY,
-	user_id BINARY(16),
+	user_id INT,
 	address VARCHAR(200),
 	discount_id INT,
 	product_id INT,
@@ -79,7 +79,7 @@ CREATE TABLE userCart (
 
 CREATE TABLE cartInfo (
 	cart_id INT,
-	user_id BINARY(16),
+	user_id INT,
 	product_id INT,
 	FOREIGN KEY (cart_id) REFERENCES userCart(user_cart_id),
 	FOREIGN KEY (user_id) REFERENCES users(user_id),

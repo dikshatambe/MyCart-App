@@ -1,4 +1,19 @@
 
+def raw_data_to_user_model(data, user):
+    user.id = data[0]
+    user.first_name = data[1]
+    user.last_name = data[2]
+    user.email_id = data[3]
+    user.contact_number = data[4]
+    user.address = data[5]
+    user.postal_code = data[6]
+    user.password = data[7]
+    user.user_type = data[8]
+    user.creation_date = data[9]
+    
+    return user
+
+
 def user_data_to_dict(data):
     return {'id':data[0],
                         'first_name':data[1],
