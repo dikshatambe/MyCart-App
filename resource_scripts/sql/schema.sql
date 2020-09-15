@@ -49,7 +49,6 @@ CREATE TABLE discount (
 	amount 	INT,
 	discount FLOAT(100,2),
 	discount_type	BOOLEAN,
-	quantity INT,
 	creation_date	DATETIME	DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -60,19 +59,19 @@ CREATE TABLE orders (
 	discount_id INT,
 	product_id INT,
 	quantity INT NULL,
-	STATUS VARCHAR(100),
+	status VARCHAR(100),
 	amount INT,
 	creation_date	DATETIME	DEFAULT CURRENT_TIMESTAMP,
-	modified DATETIME	DEFAULT CURRENT_TIMESTAMP,
+	modification DATETIME	DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (user_id) REFERENCES users(user_id),
 	FOREIGN KEY (discount_id) REFERENCES discount(discount_id)
 );
 
 CREATE TABLE userCart (
-	user_cart_id INT PRIMARY KEY,
+	user_cart_id INT AUTO_INCREMENT PRIMARY KEY,
 	order_id INT,
 	saved_for_later BOOLEAN,
-	qty INT,	
+	quantity INT,	
 	FOREIGN KEY (order_id) REFERENCES orders(order_id),
 	creation_date	DATETIME	DEFAULT CURRENT_TIMESTAMP
 );

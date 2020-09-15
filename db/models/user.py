@@ -27,11 +27,10 @@ class User:
 
     def get_user(self, user_id=None):
         if user_id == None:
-            #user_info =[]
             cur = self.db_conn.cursor()
             cur.execute("""SELECT * from {}""".format(self.table_name))
             data = cur.fetchall()
-            # print(data)
+            print(data)
             user_list = []
             for user in data:
                 usr = User()
@@ -39,7 +38,6 @@ class User:
                 user_list.append(usr)
             return user_list
         else:
-            print("hello")
             cur = self.db_conn.cursor()
             cur.execute(
                 """SELECT * from {} where user_id= {}""".format(self.table_name, self.id))

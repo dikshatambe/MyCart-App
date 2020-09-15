@@ -17,7 +17,6 @@ class Products:
 
     def create_product(self):
         cur = self.db_conn.cursor()
-        print("Create product")
         cur.execute("""INSERT into {} (product_name, category_id, info, color, product_size, price) VALUES (\"{}\",{},\"{}\",\"{}\",{},{})""".format(
             self.table_name, self.product_name, self.category_id, self.info, self.color, self.product_size, self.price))
         cur.close()
@@ -25,7 +24,6 @@ class Products:
 
     def get_product(self, product_id=None):
         if product_id == None:
-            print("Hello in product")
             cur = self.db_conn.cursor()
             cur.execute("""SELECT * from {}""".format(self.table_name))
             data = cur.fetchall()
@@ -37,7 +35,6 @@ class Products:
                 prod_list.append(usr)
             return prod_list
         else:
-            print("hello")
             cur = self.db_conn.cursor()
             cur.execute(
                 """SELECT * from {} where product_id= {}""".format(self.table_name, self.id))

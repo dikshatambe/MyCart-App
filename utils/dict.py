@@ -35,6 +35,43 @@ def raw_data_to_product_model(data, products):
     return products
 
 
+def raw_data_to_discount_model(data, discount):
+    discount.id = data[0]
+    discount.name = data[1]
+    discount.amount = data[2]
+    discount.discount = data[3]
+    discount.discount_type = data[4]
+    discount.creation_date = data[5]
+
+
+def raw_data_to_order_model(data, orders):
+    orders.id = data[0]
+    orders.user_id = data[1]
+    orders.address = data[2]
+    orders.discount_id = data[3]
+    orders.product_id = data[4]
+    orders.quantity = data[5]
+    orders.status = data[6]
+    orders.amount = data[7]
+    orders.creation_date = data[8]
+    orders.modification_date = data[9]
+
+
+def raw_data_to_cart_model(data, userCart):
+    userCart.user_cart_id = data[0]
+    userCart.order_id = data[1]
+    userCart.saved_for_later = data[2]
+    userCart.quantity = data[3]
+    userCart.creation_date = data[4]
+
+
+def raw_data_to_cartinfo_model(data, cartInfo):
+    cartInfo.cart_id = data[0]
+    cartInfo.user_id = data[1]
+    cartInfo.product_id = data[2]
+    cartInfo.creation_date = data[3]
+
+
 def user_data_to_dict(data):
     return {'id': data[0],
             'first_name': data[1],
