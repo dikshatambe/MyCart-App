@@ -40,30 +40,29 @@ class User:
         else:
             cur = self.db_conn.cursor()
             cur.execute(
-                """SELECT * from {} where user_id= {}""".format(self.table_name, self.id))
+                """SELECT * from {} where user_id= {}""".format(self.table_name, user_id))
             data = cur.fetchall()
-            if len(data) > 0:
-                usr = user_data_to_dict(data[0])
-            else:
+            if len(data) <= 0:
                 print("Invalid user")
         cur.close()
 
-    def update_user(self, user_id=None):
+    def update_user(self, user_id, first_name=None, last_name=None, email=None, contact_number=None, address=None, postal_code=None, password=None, user_type=None):
         cur = self.db_conn.cursor()
-        #cur.execute("""UPDATE {} SET user_id={}, first_name={},last_name={}, email={}, contact_number={}, address={}, postal_code={}, password={}, user_type={}, creation_date={} where user_id={}""".format(self.table_name, self.id, self.first_name, self.last_name, self.email, self.contact_number, self.address, self.postal_code, self.password, self.user_type, self.creation_date, self.id))
+
         cur.execute("""UPDATE {} SET first_name=\"{}\",last_name=\"{}\", email=\"{}\", contact_number=\"{}\", address=\"{}\", postal_code=\"{}\", password=\"{}\", user_type={} where user_id={}""".format(
-            self.table_name, self.first_name, self.last_name, self.email, self.contact_number, self.address, self.postal_code, self.password, self.user_type, self.id))
+            self.table_name, first_name, last_name, email, contact_number, address, postal_code, password, user_type, user_id))
         data = cur.fetchall()
-        if len(data) > 0:
-            usr = user_data_to_dict(data[0])
-        else:
+        if len(data) <= 0:
             print("Invalid user")
+        else:
+            print("Successfully Updated")
         cur.close()
         self.db_conn.commit()
 
-    def delete_user(self, user_id=None):
+    def delete_user(self, user_id):
         cur = self.db_conn.cursor()
         cur.execute("""DELETE FROM {} where user_id={}""".format(
-            self.table_name, self.id))
+            self.table_name, user_id))
+        print("Successfully deleted")
         cur.close()
         self.db_conn.commit()

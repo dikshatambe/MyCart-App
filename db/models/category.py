@@ -42,21 +42,25 @@ class Category:
                 print("Invalid category")
         cur.close()
 
-    def update_category(self, id=None):
+    def update_category(self, category_id, cname=None, info=None, is_deleted=None):
         cur = self.db_conn.cursor()
-        cur.execute("""UPDATE {} SET category_id={}, cname={}, info={}, is_deleted={}, creation_date={} where categoy_id={}""".format(
-            self.table_name,  self.id, self.cname, self.info, self.is_deleted, self.creation_date, id))
+        print(category_id, cname, info, is_deleted)
+
+        cur.execute("""UPDATE {} SET cname=\"{}\",info=\"{}\", is_deleted={} where category_id={}""".format(
+            self.table_name, cname, info, is_deleted, category_id))
         data = cur.fetchall()
-        if len(data) > 0:
-            usr = user_data_to_dict(data[0])
-        else:
+        if len(data) <= 0:
             print("Invalid category")
+        else:
+            print("Successfully Updated")
         cur.close()
         self.db_conn.commit()
 
-    def delete_category(self, id=None):
+    # task : Soft delete
+    def delete_category(self, category_id):
         cur = self.db_conn.cursor()
-        cur.execute("""DELETE {} where category_id={} """.format(
-            self.table_name, self.id))
+        cur.execute("""DELETE FROM {} where category_id={}""".format(
+            self.table_name, category_id))
+        print("Successfully deleted category")
         cur.close()
         self.db_conn.commit()

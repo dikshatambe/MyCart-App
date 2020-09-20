@@ -43,21 +43,22 @@ class Discount:
                 print("Invalid discount")
         cur.close()
 
-    def update_category(self, id=None):
+    def update_discount(self, discount_id, name=None, amount=None, discount=None, discount_type=None):
         cur = self.db_conn.cursor()
-        cur.execute("""UPDATE {} SET discount_id={},name={}, amount={}, discount={},discount_type={} where product_id={}""".format(
-            self.table_name, self.table_name, self.discount_id, self.name, self.amount, self.discount, self.type, self.creation_date, id))
+        cur.execute("""UPDATE {} SET name=\"{}\", amount={}, discount={},discount_type={} where discount_id={}""".format(
+            self.table_name, name, amount, discount, discount_type, discount_id))
         data = cur.fetchall()
-        if len(data) > 0:
-            usr = user_data_to_dict(data[0])
-        else:
+        if len(data) <= 0:
             print("Invalid Discount field")
+        else:
+            print("Discount Updated successfully !")
         cur.close()
         self.db_conn.commit()
 
-    def delete_category(self, id=None):
+    def delete_discount(self, discount_id):
         cur = self.db_conn.cursor()
-        cur.execute("""DELETE {} where discount_id={}""".format(
-            self.table_name, self.id))
+        cur.execute("""DELETE FROM {} where discount_id={}""".format(
+            self.table_name, discount_id))
+        print("Successfully deleted discount")
         cur.close()
         self.db_conn.commit()

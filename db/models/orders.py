@@ -47,21 +47,22 @@ class Orders:
                 print("Invalid Order")
         cur.close()
 
-    def update_order(self, id=None):
+    def update_order(self, order_id, user_id=None, address=None, discount_id=None, product_id=None, quantity=None, status=None, amount=None):
         cur = self.db_conn.cursor()
-        cur.execute("""UPDATE {} SET order_id = {}, user_id={}, address={}, discount_id={}, product_id={}, quantity={}, status={}, amount={} where order_id={}""".format(
-            self.table_name, self.id, self.user_id, self.address, self.discount_id, self.product_id, self.quantity, self.status, self.amount, self.creation_date, self.modification_date, id))
+        cur.execute("""UPDATE {} SET user_id={}, address=\"{}\", discount_id={}, product_id={}, quantity={}, status=\"{}\", amount={} where order_id={}""".format(
+            self.table_name, user_id, address, discount_id, product_id, quantity, status, amount, order_id))
         data = cur.fetchall()
-        if len(data) > 0:
-            usr = user_data_to_dict(data[0])
-        else:
+        if len(data) <= 0:
             print("Invalid Order")
+        else:
+            print("Order Updated Succefully ")
         cur.close()
         self.db_conn.commit()
 
-    def delete_order(self, id=None):
+    def delete_order(self, order_id):
         cur = self.db_conn.cursor()
         cur.execute("""DELETE {} where order_id={}""".format(
-            self.table_name, self.id))
+            self.table_name, order_id))
+        print("Order deleted successfully!")
         cur.close()
         self.db_conn.commit()

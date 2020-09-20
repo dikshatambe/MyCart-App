@@ -45,21 +45,23 @@ class Products:
                 print("Invalid product")
         cur.close()
 
-    def update_product(self, id=None):
+    def update_product(self, product_name=None, category_id=None, info=None, color=None, product_size=None, price=None):
         cur = self.db_conn.cursor()
-        cur.execute("""UPDATE {} SET product_id={},product_name={},category_id={}, info={}, color={},product_size={}, price={},creation_date={} where product_id={}""".format(
-            self.table_name, self.id, self.product_name, self.category_id, self.info, self.color, self.product_size, self.price, creation_date, id))
+
+        cur.execute("""UPDATE {} SET product_name=\"{}\",category_id={}, info=\"{}\", color=\"{}\", product_size={}, price={} where product_id={}""".format(
+            self.table_name, product_name, category_id, info, color, product_size, price, product_id))
         data = cur.fetchall()
-        if len(data) > 0:
-            usr = user_data_to_dict(data[0])
-        else:
+        if len(data) <= 0:
             print("Invalid product")
+        else:
+            print("Successfully Updated")
         cur.close()
         self.db_conn.commit()
 
-    def delete_product(self, id=None):
+    def delete_product(self, product_id):
         cur = self.db_conn.cursor()
         cur.execute("""DELETE {} where product_id={}""".format(
-            self.table_name, self.id))
+            self.table_name, product_id))
+        print("Product deleted successfully")
         cur.close()
         self.db_conn.commit()

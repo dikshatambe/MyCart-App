@@ -3,18 +3,19 @@ from utils.dict import raw_data_to_cartinfo_model
 
 
 class Cart_info:
-    def __init__(self, cart_id, db_conn=None, user_id=None, product_id=None, creation_date=None):
+    def __init__(self, cart_id, db_conn=None, user_id=None, product_id=None, info=None, creation_date=None):
         self.table_name = 'cartInfo'
         self.db_conn = db_conn
         self.id = cart_id
         self.user_id = user_id
         self.product_id = product_id
+        self.info = info
         self.creation_date = creation_date
 
     def create_cart(self):
         cur = self.db_conn.cursor()
-        cur.execute("""INSERT into {} (cart_id, user_id, product_id) VALUES ({},{},{})""".format(
-            self.table_name, self.id, self.user_id, self.product_id))
+        cur.execute("""INSERT into {} (cart_id, user_id, product_id, info) VALUES ({},{},{}, \"{}\")""".format(
+            self.table_name, self.id, self.user_id, self.product_id, self.info))
         cur.close()
         self.db_conn.commit()
 
@@ -43,8 +44,8 @@ class Cart_info:
 
     def update_cart_info(self, id=None):
         cur = self.db_conn.cursor()
-        cur.execute("""UPDATE {} SET cart_id = {}, user_id={}, product_id={}, creation_date={} where cart_id={} """.format(
-            self.table_name, self.id, self.user_id, self.product_id, self.creation_date, id))
+        cur.execute("""UPDATE {} SET cart_id = {}, user_id={}, product_id={}, info= \"{}\", creation_date={} where cart_id={} """.format(
+            self.table_name, self.id, self.user_id, self.product_id, self.info, self.creation_date, id))
         data = cur.fetchall()
         if len(data) > 0:
             usr = user_data_to_dict(data[0])

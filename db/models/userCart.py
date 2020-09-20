@@ -42,21 +42,21 @@ class User_cart:
                 print("Invalid Cart Details")
         cur.close()
 
-    def update_cart(self, id=None):
+    def update_cart(self, user_cart_id, order_id=None, saved_for_later=None, quantity=None):
         cur = self.db_conn.cursor()
-        cur.execute("""UPDATE {} SET user_cart_id = {}, order_id={}, saved_for_later={}, quantity={}, creation_date={} where user_cart_id={}""".format(
-            self.table_name, self.id, self.order_id, self.saved_for_later, self.quantity, self.creation_date, id))
+        cur.execute("""UPDATE {} SET order_id={}, saved_for_later={}, quantity={} where user_cart_id={}""".format(
+            self.table_name, order_id, saved_for_later, quantity, user_cart_id))
         data = cur.fetchall()
-        if len(data) > 0:
-            usr = user_data_to_dict(data[0])
-        else:
+        if len(data) <= 0:
             print("Invalid Cart")
+        else:
+            print("User cart updated successfully!")
         cur.close()
         self.db_conn.commit()
 
-    def delete_cart(self):
+    def delete_cart(self, user_cart_id):
         cur = self.db_conn.cursor()
         cur.execute("""DELETE {} where user_cart_id={}""".format(
-            self.table_name, id))
+            self.table_name, user_cart_id))
         cur.close()
         self.db_conn.commit()
